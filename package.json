@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "Kherven",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^12.1.1"
   },
