@@ -1,14 +1,14 @@
 {
   "name": "WatchBot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Barebones schedule availability bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "Kherven",
+  "author": "aleinin",
   "license": "MIT",
   "dependencies": {
     "discord.js": "^12.1.1"
