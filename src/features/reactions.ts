@@ -2,7 +2,7 @@ import {Message} from 'discord.js'
 import {ReturnReason} from '../on-message'
 import {idToCmd} from '../commands'
 
-export const handleQuestionReactions = async (message: Message): Promise<ReturnReason> =>
+export const handleQuestionReactions = (message: Message): Promise<ReturnReason> =>
     message.delete()
         .then(() => sendQuestionAndReturnChoices(message))
         .then((choices) => sendChoicesWithReactions(choices, message))

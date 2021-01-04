@@ -9,13 +9,15 @@ export interface CommandDict {
 export const idToCmd: CommandDict = {
     reactq: '!wb reactq',
     react: '!wb react',
-    clear: '!wb clear'
+    clear: '!wb clear',
+    help: '!wb help'
 }
 
 export const commands: Commands = {
     [`${idToCmd.react}`]: new RegExp(`^${idToCmd.react} (.*,)*(.*\\S+)$`),
     [`${idToCmd.reactq}`]: new RegExp(`^${idToCmd.reactq} .+\\? ([^,]+,)*(.*\\S+)`),
     [`${idToCmd.clear}`]: new RegExp(`^${idToCmd.clear}$`),
+    [`${idToCmd.help}`]: new RegExp(`^${idToCmd.help}$`)
 }
 
 export const getCommandTypeIfValid = (input: string): false | string => {

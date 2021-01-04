@@ -18,3 +18,8 @@ Spaces after "," are optional
 ### !wb clear
 
 Clears all bot messages (limit 100)
+
+### !wb help
+
+Posts a message describing the bots functionality
+

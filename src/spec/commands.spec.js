@@ -1,65 +1,70 @@
 import {idToCmd, getCommandTypeIfValid} from "../commands"
 
-const testCommandValid = (command, valid) => {
-    expect(getCommandTypeIfValid(command)).toEqual(valid)
-}
+const expectFalse = (command) =>
+    expect(getCommandTypeIfValid(command)).toBeFalsy()
+const expectValid = (command, expected) =>
+    expect(getCommandTypeIfValid(command)).toEqual(expected)
+
 describe('getCommandTypeIfValid', () => {
+    const simpleCommandTests = (command) =>
+        describe(command, () => {
+            it(`should accept exactly ${command}`, () => {
+                expectValid(command, command)
+            })
+
+            it (`should reject ${idToCmd.clear} with any extras`, () => {
+                expectFalse(`${command} a`)
+                expectFalse(`${command} `)
+            })
+        })
+
     it('should return false if unknown command', () => {
-        testCommandValid('!unknown command', false)
+        expectFalse('!unknown command')
     })
 
-    describe(`${idToCmd.react}`, () => {
+    describe(idToCmd.react, () => {
         it(`should accept ${idToCmd.react} a, b, c`, () => {
-            testCommandValid(`${idToCmd.react} a, b, c`, `${idToCmd.react}`)
+            expectValid(`${idToCmd.react} a, b, c`, idToCmd.react)
         })
 
         it(`should accept ${idToCmd.react} a`, () => {
-            testCommandValid(`${idToCmd.react} a`, `${idToCmd.react}`)
+            expectValid(`${idToCmd.react} a`, idToCmd.react)
         })
 
         it(`should accept ${idToCmd.react} single choice`, () => {
-            testCommandValid(`${idToCmd.react} a`, `${idToCmd.react}`)
+            expectValid(`${idToCmd.react} a`, idToCmd.react)
         })
 
         it(`should accept ${idToCmd.react} multiple, choice`, () => {
-            testCommandValid(`${idToCmd.react} a`, `${idToCmd.react}`)
+            expectValid(`${idToCmd.react} a`, idToCmd.react)
         })
 
         it(`should reject ${idToCmd.react}`, () => {
-            testCommandValid('${featureIdToCommand.react}', false)
+            expectValid('${featureIdToCommand.react}', false)
         })
 
         it(`should reject ${idToCmd.react} ,`, () => {
-            testCommandValid(`${idToCmd.react}`, false)
+            expectValid(idToCmd.react, false)
         })
     })
 
-    describe(`${idToCmd.reactq}`, () => {
+    describe(idToCmd.reactq, () => {
         it(`should accept ${idToCmd.reactq} question? a, b, c`, () => {
-            testCommandValid(`${idToCmd.reactq} question? a, b, c`, `${idToCmd.reactq}`)
+            expectValid(`${idToCmd.reactq} question? a, b, c`, idToCmd.reactq)
         })
 
         it(`should accept ${idToCmd.reactq} q? a`, () => {
-            testCommandValid(`${idToCmd.reactq} q? a`, `${idToCmd.reactq}`)
+            expectValid(`${idToCmd.reactq} q? a`, idToCmd.reactq)
         })
 
         it(`should reject ${idToCmd.reactq}`, () => {
-            testCommandValid(`${idToCmd.reactq}`, false)
+            expectFalse(idToCmd.reactq)
         })
 
         it(`should reject ${idToCmd.reactq} q? ,`, () => {
-            testCommandValid(`${idToCmd.reactq} q?`, false)
+            expectFalse(`${idToCmd.reactq} q?`)
         })
     })
-
-    describe(`${idToCmd.clear}`, () => {
-        it(`should accept exactly ${idToCmd.clear}`, () => {
-            testCommandValid(`${idToCmd.clear}`, `${idToCmd.clear}`)
-        })
-
-        it (`should reject ${idToCmd.clear} with any extras`, () => {
-            testCommandValid(`${idToCmd.clear} a`, false)
-            testCommandValid(`${idToCmd.clear} `, false)
-        })
-    })
+    simpleCommandTests(idToCmd.clear)
+    simpleCommandTests(idToCmd.help)
 })
