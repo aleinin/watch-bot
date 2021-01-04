@@ -1,5 +1,4 @@
 import * as reactions from '../features/reactions'
-import * as util from '../util'
 import * as commands from '../commands'
 import * as clear from '../features/clear'
 import {onMessage, ReturnReason} from "../on-message"
@@ -14,7 +13,6 @@ describe('onMessage', () => {
 
     it('should return if not a command (!)', async () => {
         const message = {author: {id: 'someone'}, content: 'hello'}
-        jest.spyOn(util, 'safeGetFirstRegexMatch').mockReturnValue(undefined)
         expect(await onMessage(message, client)).toEqual(ReturnReason.InvalidCommand)
     })
 
@@ -26,8 +24,7 @@ describe('onMessage', () => {
     it(`should call handleReactions if command starts with ${idToCmd.react}`, async () => {
         const message = {author: {id: 'someone'}, content: `${idToCmd.react} a, b, c`}
         const choiceSpy = jest.spyOn(reactions, 'handleReactions').mockReturnValue(undefined)
-        jest.spyOn(util, 'safeGetFirstRegexMatch').mockReturnValue(`${idToCmd.react}`)
-        jest.spyOn(commands, 'validCommand').mockReturnValue(true)
+        jest.spyOn(commands, 'getCommandTypeIfValid').mockReturnValue(`${idToCmd.react}`)
         await onMessage(message, client)
         expect(choiceSpy).toHaveBeenCalled()
     })
@@ -35,8 +32,7 @@ describe('onMessage', () => {
     it(`should call handleQuestionReactions if command starts with ${idToCmd.reactq}`, async () => {
         const message = {author: {id: 'someone'}, content: `${idToCmd.reactq} q? a, b, c`}
         const questionSpy = jest.spyOn(reactions, 'handleQuestionReactions').mockReturnValue(undefined)
-        jest.spyOn(util, 'safeGetFirstRegexMatch').mockReturnValue(`${idToCmd.reactq}`)
-        jest.spyOn(commands, 'validCommand').mockReturnValue(true)
+        jest.spyOn(commands, 'getCommandTypeIfValid').mockReturnValue(`${idToCmd.reactq}`)
         await onMessage(message, client)
         expect(questionSpy).toHaveBeenCalled()
     })
@@ -44,16 +40,14 @@ describe('onMessage', () => {
     it(`should call clearBotMessages if message is exactly ${idToCmd.clear}`, async () => {
         const message = {author: {id: 'someone'}, content: `${idToCmd.clear}`}
         const clearSpy = jest.spyOn(clear, 'clearBotMessages').mockReturnValue(undefined)
-        jest.spyOn(util, 'safeGetFirstRegexMatch').mockReturnValue(`${idToCmd.clear}`)
-        jest.spyOn(commands, 'validCommand').mockReturnValue(true)
+        jest.spyOn(commands, 'getCommandTypeIfValid').mockReturnValue(`${idToCmd.clear}`)
         await onMessage(message, client)
         expect(clearSpy).toHaveBeenCalled()
     })
 
     it(`should not call clearBotMessages if it starts with ${idToCmd.clear} but has other parts`, async () => {
         const message = {author: {id: 'someone'}, content: `${idToCmd.clear} and some other stuff`}
-        jest.spyOn(util, 'safeGetFirstRegexMatch').mockReturnValue(`${idToCmd.clear}`)
-        jest.spyOn(commands, 'validCommand').mockReturnValue(false)
+        jest.spyOn(commands, 'getCommandTypeIfValid').mockReturnValue(false)
         expect(await onMessage(message, client)).toEqual(ReturnReason.InvalidCommand)
     })
 })

@@ -1,7 +1,6 @@
 import {Client, Message} from 'discord.js'
-import {safeGetFirstRegexMatch} from './util'
 import {handleQuestionReactions, handleReactions} from './features/reactions'
-import {idToCmd, validCommand} from './commands'
+import {idToCmd, getCommandTypeIfValid} from './commands'
 import {clearBotMessages} from './features/clear'
 
 export enum ReturnReason {
@@ -15,11 +14,11 @@ export const onMessage = async (message: Message, client: Client): Promise<Retur
     if (message.author.id === client?.user?.id) {
         return ReturnReason.SenderIsClient
     }
-    const startsWith = safeGetFirstRegexMatch(message.content, /^![a-z]+/)
-    if (startsWith == null || !validCommand(startsWith, message.content)) {
+    const commandType = getCommandTypeIfValid(message.content)
+    if (!commandType) {
         return ReturnReason.InvalidCommand
     }
-    switch (startsWith) {
+    switch (commandType) {
         case `${idToCmd.react}`:
             return await handleReactions(message)
         case `${idToCmd.reactq}`:

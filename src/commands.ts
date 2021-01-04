@@ -7,9 +7,9 @@ export interface CommandDict {
 }
 
 export const idToCmd: CommandDict = {
-    reactq: '!reactq',
-    react: '!react',
-    clear: '!clear'
+    reactq: '!wb reactq',
+    react: '!wb react',
+    clear: '!wb clear'
 }
 
 export const commands: Commands = {
@@ -18,7 +18,15 @@ export const commands: Commands = {
     [`${idToCmd.clear}`]: new RegExp(`^${idToCmd.clear}$`),
 }
 
-export const validCommand = (commandType: string, message: string): boolean => {
-    const pattern = commands[commandType]
-    return pattern != null && pattern.test(message)
+export const getCommandTypeIfValid = (input: string): false | string => {
+    const matchingCommands = Object.keys(commands).filter((id) => input.startsWith(id))
+    if (matchingCommands.length === 0) {
+        return false
+    }
+    const command = getLongestMatchingCommand(matchingCommands)
+    return commands[command].test(input) ? command : false
 }
+
+const getLongestMatchingCommand = (matches: string[]) =>
+    matches.sort((a, b) => b.length - a.length)[0]
+
