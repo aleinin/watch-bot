@@ -1,5 +1,5 @@
-import {ClientUser, Message} from "discord.js"
-import {ReturnReason} from "../on-message"
+import {ClientUser, Message} from 'discord.js'
+import {ReturnReason} from '../on-message'
 
 export const clearBotMessages = async (message: Message, author: ClientUser): Promise<ReturnReason> =>
     message.delete()

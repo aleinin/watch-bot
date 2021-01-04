@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm-run-all lint clean tsc start",
     "clean": "rimraf dist",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --fix --ext .ts",
     "start": "node ./dist/watch-bot.js",
     "test": "jest -c jest.config.js",
     "tsc": "npx tsc",

@@ -1,8 +1,8 @@
-import {Client, Message} from "discord.js"
-import {safeGetFirstRegexMatch} from "./util"
-import {handleQuestionReactions, handleReactions} from "./features/reactions"
-import {validCommand} from "./commands"
-import {clearBotMessages} from "./features/clear"
+import {Client, Message} from 'discord.js'
+import {safeGetFirstRegexMatch} from './util'
+import {handleQuestionReactions, handleReactions} from './features/reactions'
+import {validCommand} from './commands'
+import {clearBotMessages} from './features/clear'
 
 export enum ReturnReason {
     SenderIsClient,
