@@ -1,11 +1,21 @@
 export interface Commands {
-    [command: string]: RegExp
+    [commandId: string]: RegExp
+}
+
+export interface CommandDict {
+    [commandId: string]: string
+}
+
+export const idToCmd: CommandDict = {
+    reactq: '!reactq',
+    react: '!react',
+    clear: '!clear'
 }
 
 export const commands: Commands = {
-    react: /^!react (.*,)*(.*\S+)$/,
-    reactq: /^!reactq .+\? ([^,]+,)*(.*\S+)/,
-    clear: /^!clear$/,
+    [`${idToCmd.react}`]: new RegExp(`^${idToCmd.react} (.*,)*(.*\\S+)$`),
+    [`${idToCmd.reactq}`]: new RegExp(`^${idToCmd.reactq} .+\\? ([^,]+,)*(.*\\S+)`),
+    [`${idToCmd.clear}`]: new RegExp(`^${idToCmd.clear}$`),
 }
 
 export const validCommand = (commandType: string, message: string): boolean => {

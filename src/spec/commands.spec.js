@@ -1,4 +1,4 @@
-import {validCommand} from "../commands"
+import {idToCmd, validCommand} from "../commands"
 
 const testCommandValid = (commandType, command, valid) => {
     expect(validCommand(commandType, command)).toEqual(valid)
@@ -8,67 +8,67 @@ describe('validCommand', () => {
         testCommandValid('unknown', '!unknown command', false)
     })
 
-    describe('!react', () => {
+    describe(`${idToCmd.react}`, () => {
         const testReactValid = (command, valid) =>
-            testCommandValid('react', command, valid)
+            testCommandValid(`${idToCmd.react}`, command, valid)
 
-        it('should accept !react a, b, c', () => {
-            testReactValid('!react a, b, c', true)
+        it(`should accept ${idToCmd.react} a, b, c`, () => {
+            testReactValid(`${idToCmd.react} a, b, c`, true)
         })
 
-        it('should accept !react a', () => {
-            testReactValid('!react a', true)
+        it(`should accept ${idToCmd.react} a`, () => {
+            testReactValid(`${idToCmd.react} a`, true)
         })
 
-        it('should accept !react single choice', () => {
-            testReactValid('!react a', true)
+        it(`should accept ${idToCmd.react} single choice`, () => {
+            testReactValid(`${idToCmd.react} a`, true)
         })
 
-        it('should accept !react multiple, choice', () => {
-            testReactValid('!react a', true)
+        it(`should accept ${idToCmd.react} multiple, choice`, () => {
+            testReactValid(`${idToCmd.react} a`, true)
         })
 
-        it('should reject !react', () => {
-            testReactValid('!react', false)
+        it(`should reject ${idToCmd.react}`, () => {
+            testReactValid('${featureIdToCommand.react}', false)
         })
 
-        it('should reject !react ,', () => {
-            testReactValid('!react', false)
+        it(`should reject ${idToCmd.react} ,`, () => {
+            testReactValid(`${idToCmd.react}`, false)
         })
     })
 
-    describe('!reactq', () => {
+    describe(`${idToCmd.reactq}`, () => {
         const testReactQValid = (command, valid) =>
-            testCommandValid('reactq', command, valid)
+            testCommandValid(`${idToCmd.reactq}`, command, valid)
 
-        it('should accept !reactq question? a, b, c', () => {
-            testReactQValid('!reactq question? a, b, c', true)
+        it(`should accept ${idToCmd.reactq} question? a, b, c`, () => {
+            testReactQValid(`${idToCmd.reactq} question? a, b, c`, true)
         })
 
-        it('should accept !reactq q? a', () => {
-            testReactQValid('!reactq q? a', true)
+        it(`should accept ${idToCmd.reactq} q? a`, () => {
+            testReactQValid(`${idToCmd.reactq} q? a`, true)
         })
 
-        it('should reject !reactq', () => {
-            testReactQValid('!reactq', false)
+        it(`should reject ${idToCmd.reactq}`, () => {
+            testReactQValid(`${idToCmd.reactq}`, false)
         })
 
-        it('should reject !reactq q? ,', () => {
-            testReactQValid('!reactq q?', false)
+        it(`should reject ${idToCmd.reactq} q? ,`, () => {
+            testReactQValid(`${idToCmd.reactq} q?`, false)
         })
     })
 
-    describe('!clear', () => {
+    describe(`${idToCmd.clear}`, () => {
         const testClearValid = (command, valid) =>
-            testCommandValid('clear', command, valid)
+            testCommandValid(`${idToCmd.clear}`, command, valid)
 
-        it('should accept exactly !clear', () => {
-            testClearValid('!clear', true)
+        it(`should accept exactly ${idToCmd.clear}`, () => {
+            testClearValid(`${idToCmd.clear}`, true)
         })
 
-        it ('should reject !clear with any extras', () => {
-            testClearValid('!clear a', false)
-            testClearValid('!clear ', false)
+        it (`should reject ${idToCmd.clear} with any extras`, () => {
+            testClearValid(`${idToCmd.clear} a`, false)
+            testClearValid(`${idToCmd.clear} `, false)
         })
     })
 })

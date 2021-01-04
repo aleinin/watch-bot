@@ -1,6 +1,6 @@
 import {Message} from 'discord.js'
 import {ReturnReason} from '../on-message'
-import {featureIdToCommand} from '../commands'
+import {idToCmd} from '../commands'
 
 export const handleQuestionReactions = async (message: Message): Promise<ReturnReason> =>
     message.delete()
@@ -11,16 +11,16 @@ export const handleQuestionReactions = async (message: Message): Promise<ReturnR
 export const handleReactions = (message: Message): Promise<ReturnReason> =>
     message.delete()
         .then(() =>
-            sendChoicesWithReactions(message.content.replace(`${featureIdToCommand.react} `, ''),
+            sendChoicesWithReactions(message.content.replace(`${idToCmd.react} `, ''),
                 message))
         .then(() => ReturnReason.Success)
 
 const sendQuestionAndReturnChoices = ({channel, content}: Message) =>
     channel.send(`${content
-        .replace(`${featureIdToCommand.reactQuestion} `, '')
+        .replace(`${idToCmd.reactq} `, '')
         .split('? ')[0]}?`)
         .then((sent) =>
-            content.replace(`!${featureIdToCommand.reactQuestion} ${sent.content} `, ''))
+            content.replace(`${idToCmd.reactq} ${sent.content} `, ''))
 
 const sendChoiceAndReact = (message: Message, choice: string) =>
     message.channel.send(choice)

@@ -1,4 +1,5 @@
 import {handleQuestionReactions, handleReactions} from "../reactions"
+import {idToCmd} from "../../commands"
 
 const reactNTimes = (n) =>
     Array.from(Array(n))
@@ -36,7 +37,9 @@ describe('Reactions', () => {
 
     describe('handleQuestionReactions', () => {
         it('send question, then choices and react to them', async () => {
-            const commandMessage = setupCommandMessage('!reactq question? choice! one!,choice two, !@#$, d')
+            const commandMessage = setupCommandMessage(
+                `${idToCmd.reactq} question? choice! one!,choice two, !@#$, d`
+            )
             await handleQuestionReactions(commandMessage)
             expect(mockDelete).toHaveBeenCalledTimes(1)
             expect(mockSend).toHaveBeenCalledTimes(5)
@@ -48,7 +51,7 @@ describe('Reactions', () => {
 
     describe('handleReactions', () => {
         it('should send choices and react to them', async () => {
-            const commandMessage = setupCommandMessage('!react a, b, c')
+            const commandMessage = setupCommandMessage(`${idToCmd.react} a, b, c`)
             await handleReactions(commandMessage)
             expect(mockDelete).toHaveBeenCalledTimes(1)
             expect(mockSend).toHaveBeenCalledTimes(3)

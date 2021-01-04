@@ -1,7 +1,7 @@
 import {Client, Message} from 'discord.js'
 import {safeGetFirstRegexMatch} from './util'
 import {handleQuestionReactions, handleReactions} from './features/reactions'
-import {validCommand} from './commands'
+import {idToCmd, validCommand} from './commands'
 import {clearBotMessages} from './features/clear'
 
 export enum ReturnReason {
@@ -20,11 +20,11 @@ export const onMessage = async (message: Message, client: Client): Promise<Retur
         return ReturnReason.InvalidCommand
     }
     switch (startsWith) {
-        case '!react':
+        case `${idToCmd.react}`:
             return await handleReactions(message)
-        case '!reactq':
+        case `${idToCmd.reactq}`:
             return await handleQuestionReactions(message)
-        case '!clear':
+        case `${idToCmd.clear}`:
             return client.user != null ? await clearBotMessages(message, client.user) : ReturnReason.InvalidCommand
     }
     return ReturnReason.Noop
