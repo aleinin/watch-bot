@@ -16,7 +16,7 @@ export const onMessage = async (message: Message, client: Client): Promise<Retur
         return ReturnReason.SenderIsClient
     }
     const startsWith = safeGetFirstRegexMatch(message.content, /^![a-z]+/)
-    if (startsWith == null || !validCommand(startsWith.replace('!', ''), message.content)) {
+    if (startsWith == null || !validCommand(startsWith, message.content)) {
         return ReturnReason.InvalidCommand
     }
     switch (startsWith) {
