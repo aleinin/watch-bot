@@ -1,10 +1,6 @@
 import { ClientUser, Message } from 'discord.js'
-import { ReturnReason } from '../on-message'
 
-export const clearBotMessages = async (
-  message: Message,
-  author: ClientUser
-): Promise<ReturnReason> =>
+export const clearBotMessages = async (message: Message, author: ClientUser) =>
   message
     .delete()
     .then(() =>
@@ -19,4 +15,3 @@ export const clearBotMessages = async (
     .then((messagesToDelete) =>
       messagesToDelete.forEach((message) => message.delete())
     )
-    .then(() => ReturnReason.Success)

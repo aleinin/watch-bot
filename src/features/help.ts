@@ -1,5 +1,4 @@
-import {Message} from 'discord.js'
-import {ReturnReason} from '../on-message'
+import { Message } from 'discord.js'
 
 const helpMessage = `\`\`\`
 Commands
@@ -23,7 +22,5 @@ help
     Posts this message
 \`\`\``
 
-export const help = async (message: Message): Promise<ReturnReason> =>
-    message.delete()
-        .then(() => message.channel.send(helpMessage))
-        .then(() => ReturnReason.Success)
+export const help = async (message: Message) =>
+  message.delete().then(() => message.channel.send(helpMessage))

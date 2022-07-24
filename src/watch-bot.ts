@@ -1,16 +1,28 @@
-import Discord from 'discord.js'
-import {onMessage} from './on-message'
+import Discord, { ActivityType, GatewayIntentBits } from 'discord.js'
+import { onMessage } from './on-message'
+import dotenv from 'dotenv'
 
-const client = new Discord.Client()
+dotenv.config()
+const client = new Discord.Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+})
 client.login(process.env.WATCH_BOT_TOKEN)
-client.on('ready', () =>
-    client.user?.setPresence({
-        status: 'online',
-        activity: {
-            name: '!wb help',
-            type: 'PLAYING'
-        }
-    }).then(() => console.log(`Logged in as ${client?.user?.tag}!`))
-)
-client.on('message', (message) =>
-    onMessage(message, client))
+client.once('ready', () => {
+  client.user?.setPresence({
+    status: 'online',
+    activities: [
+      {
+        name: '!wb help',
+        type: ActivityType.Playing,
+      },
+    ],
+  })
+  console.log(`Logged in as ${client?.user?.tag}!`)
+})
+client.on('messageCreate', (message) => {
+  onMessage(message, client)
+})
