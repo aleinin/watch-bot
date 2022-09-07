@@ -20,6 +20,9 @@ clear
 help
     usage: !wb help
     Posts this message
+repeat
+    usage: !wb repeat
+    Repeats your last recorded command. clear & repeat are not recorded
 \`\`\``
 
 export const help = async (message: Message) =>

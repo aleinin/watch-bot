@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Barebones schedule availability bot",
   "scripts": {
-    "build": "npm-run-all lint clean tsc start",
+    "build": "npm-run-all lint test clean tsc start",
     "clean": "rimraf dist",
     "lint": "eslint . --fix --ext .ts",
     "start": "node ./dist/watch-bot.js",
@@ -16,10 +16,12 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "~14.1.2",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/node": "^16.11.7",
     "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^5.30.7",

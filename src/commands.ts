@@ -11,6 +11,7 @@ export const idToCmd: CommandDict = {
   react: '!wb react',
   clear: '!wb clear',
   help: '!wb help',
+  repeat: '!wb repeat',
 }
 
 export const botPrefix = '!wb'
@@ -23,7 +24,10 @@ export const commands: Commands = {
   ),
   [`${idToCmd.clear}`]: new RegExp(`^${idToCmd.clear}$`),
   [`${idToCmd.help}`]: new RegExp(`^${idToCmd.help}$`),
+  [`${idToCmd.repeat}`]: new RegExp(`^${idToCmd.repeat}$`),
 }
+
+const doNotRecord = [`${idToCmd.repeat}`, `${idToCmd.clear}`]
 
 export const getCommandTypeIfValid = (input: string): false | string => {
   const matchingCommands = Object.keys(commands).filter((id) =>
@@ -38,6 +42,10 @@ export const getCommandTypeIfValid = (input: string): false | string => {
 
 export const isBeingHailed = (input: string): boolean => {
   return input.startsWith(`${botPrefix} `)
+}
+
+export const shouldRecord = (command: string): boolean => {
+  return !doNotRecord.includes(command)
 }
 
 const getLongestMatchingCommand = (matches: string[]) =>
