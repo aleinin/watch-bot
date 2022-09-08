@@ -1,8 +1,9 @@
 module.exports = {
   preset: 'ts-jest',
-  roots: ["<rootDir>/src"],
+  roots: ['<rootDir>/src'],
   testEnvironment: 'node',
-  "transform": {
-    "^.+\\.(ts|js)x?$": "ts-jest"
-  }
-};
+  transform: {
+    '^.+\\.(ts|js)x?$': 'ts-jest',
+  },
+  collectCoverage: true,
+}

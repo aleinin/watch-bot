@@ -34,5 +34,8 @@ client.once('ready', () => {
   console.log(`Logged in as ${client?.user?.tag}!`)
 })
 client.on('messageCreate', (message) => {
-  onMessage(message, client)
+  onMessage(message, client).catch((reason) => {
+    console.error('Uncaught error while processing message:')
+    console.error(reason)
+  })
 })
